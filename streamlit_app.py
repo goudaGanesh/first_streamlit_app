@@ -12,7 +12,7 @@ my_fruit_list = my_fruit_list.set_index('Fruit')
 
 # streamlit.dataframe(my_fruit_list);
 
-streamlit.multiselect('Pick Some Fruits:',list(my_fruit_list.index),['Avacado','Strawberries']);
+streamlit.multiselect('Pick Some Fruits:',list(my_fruit_list.index),['Avocado','Strawberries']);
 
 #dispslay table
 
