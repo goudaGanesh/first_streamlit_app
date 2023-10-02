@@ -44,4 +44,6 @@ streamlit.dataframe(my_data_rows)
 
 #new text box
 new_fruit = streamlit.text_input('What fruit would you like to add?','jackfruit')
-streamlit.write(f'The user entered {new_fruit}');
+streamlit.write(f'Thanks for adding {new_fruit}');
+
+my_cur.execute(F'INSERT INTO FRUIT_LOAD_LIST VALUES({new_fruit})');
