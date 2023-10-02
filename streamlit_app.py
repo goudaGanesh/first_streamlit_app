@@ -50,12 +50,23 @@ except:
 
 streamlit.stop();
 
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
-my_data_rows = my_cur.fetchall()
+# my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+# my_cur = my_cnx.cursor()
+# my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
+# my_data_rows = my_cur.fetchall()
 streamlit.header("The Fruit Load List Contains:")
-streamlit.dataframe(my_data_rows)
+def get_fruit_load_list():
+    with my_cnx.cursor() as my_cur:
+        return my_cur.fetchall()
+
+
+# add button
+if streamlit.button('Get Fruit Load List'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    my_data_rows = get_fruit_load_list()
+    streamlit.dataframe(my_data_rows)
+
+
 
 
 #new text box
