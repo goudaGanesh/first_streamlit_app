@@ -27,7 +27,7 @@ streamlit.header('Fruityvice Fruit Advice');
 fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 streamlit.write(f'The user entered {fruit_choice}');
 
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice);
+fruityvice_response = requests.get(f"https://fruityvice.com/api/fruit/{fruit_choice}");
 
 #normalising json response
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json());
