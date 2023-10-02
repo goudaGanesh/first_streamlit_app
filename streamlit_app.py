@@ -3,6 +3,10 @@ import pandas as pd
 import requests
 import json
 import snowflake.connector
+from urllib.error import URLError
+
+
+
 streamlit.title('My Parents New Healthy Diner');
 
 my_fruit_list = pd.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt");
@@ -24,14 +28,24 @@ streamlit.dataframe(fruits_to_show);
  
   # fruityvice api 
 streamlit.header('Fruityvice Fruit Advice'); 
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write(f'The user entered {fruit_choice}');
 
-fruityvice_response = requests.get(f"https://fruityvice.com/api/fruit/{fruit_choice}");
+try:
+
+    fruit_choice = streamlit.text_input('What fruit would you like information about?')
+    if not fruit_choice:
+        streamlit.error("Please Select a fruit to get information")
+    else:
+        fruityvice_response = requests.get(f"https://fruityvice.com/api/fruit/{fruit_choice}");
+        fruityvice_normalized = pd.json_normalize(fruityvice_response.json());
+        streamlit.dataframe(fruityvice_normalized);
+
+
+    # streamlit.write(f'The user entered {fruit_choice}');
+
+except:
+    streamlit.error()
 
 #normalising json response
-fruityvice_normalized = pd.json_normalize(fruityvice_response.json());
-streamlit.dataframe(fruityvice_normalized);
 
 streamlit.stop();
 
